@@ -1,10 +1,12 @@
+#ifndef CAR_H
+#define CAR_H
 #include <iostream>
 using namespace std;
 
 struct car{
     int id;
     string brand;
-    string modul;
+    string model;
     string color;
     string price;
     string country;
@@ -23,9 +25,11 @@ struct list{
     Element *head;
     Element *tail;
 };
-list *CreateEmptyList(){
-    list *ls =new list;
-    ls->n=0;
-    ls->head=ls->tail=nullptr;
+list* CreateEmptyCarList() {
+    list* ls = new list;
+    ls->n = 0;
+    ls->head = NULL;
+    ls->tail = NULL;
     return ls;
 }
+#endif

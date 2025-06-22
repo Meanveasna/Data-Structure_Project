@@ -1,7 +1,82 @@
-#include<../include/car.h>
+#include"../include/car.h"
+#include"../include/addCar.h"
+#include"../include/deleteCar.h"
 #include<iostream>
 using namespace std;
-void mainadmin(list *ls, car c){
+void addcar(list *ls){
+    car c;
+    cout<<"Please enter id:  ";
+    cin>>c.id;
+    cout<<"Please enter brand: ";
+    cin>>c.brand;
+    cout<<"Please enter model: ";
+    cin>>c.model;
+    cout<<"Please enter color: ";
+    cin>>c.color;
+    cout<<"Please enter price: ";
+    cin>>c.price;
+    cout<<"Please enter contry: ";
+    cin>>c.country;
+    cout<<"Please enter description: ";
+    cin>>c.description;
+    cout<<"Please enter status(in stock, Used or not): ";
+    cin>>c.status;
+    int option;
+    cout<<"\nInsert at: \n";
+    cout<<"1. Beginning\n";
+    cout<<"2. End\n";
+    cout<<"Choose option: ";
+    cin>>option;
+    switch (option){
+    case 1:
+        addBegin(ls,c);
+        cout<<"Car added at beginning."<<endl;
+        break;
+    case 2:
+        addEnd(ls, c);
+        cout<<"Car added at End."<<endl;
+        break;
+    default:
+        cout<<"Invalid option. "<<endl;
+        break;
+    }
+}
+void deleteCar(list *ls){
+    int choice;
+    cout<<"\nDelete at: \n";
+    cout<<"1. Beginning. "<<endl;
+    cout<<"2. End. "<<endl;
+    cout<<"3. Position. "<<endl;
+    cout<<"Choose option: ";
+    cin>>choice;
+    switch (choice){
+    case 1:
+        deleteBegin(ls);
+        cout<<"Car have been delete from the begin."<<endl;
+        break;
+    case 2:
+        deleteEnd(ls);
+        cout<<"Car have been delete from the End. "<<endl;
+        break;
+    case 3:
+        int pos;
+        cout<<"Please enter position you want to delete: ";
+        cin>>pos;
+        
+        deleteAtPos(ls,pos);
+        if(pos>ls->n-1){
+            cout<<"No Car in this position."<<endl;
+        }else{
+            cout<<"Car have been delete from "<<pos<<"."<<endl;
+        }
+        
+        break;
+    default:
+        cout<<"Invalid option."<<endl;
+        break;
+    }
+}
+void mainadmin(list *ls){
     int choice;
     while (true){
         cout << "\n╔══════════════════════════════════════════════╗\n";
@@ -20,14 +95,13 @@ void mainadmin(list *ls, car c){
         switch (choice)
         {
         case 1:
-            cout<<"Add Car."<<endl;
+            addcar(ls);
             break;
         
         case 2:
-            cout<<"Delete Car."<<endl;
+            deleteCar(ls);
             break;
         case 3:
-            cout<<"Modify Car's info."<<endl;
             break;
         default:
             break;

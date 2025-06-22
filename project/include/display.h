@@ -1,10 +1,10 @@
-#include <car.h>
+#include "car.h"
 #include <iostream>
 using namespace std;
 void diaplay(list *ls){
     Element *e=ls->head;
     while (e!=nullptr){
-        cout<<e->data.id<<" "<<e->data.brand<<" "<<e->data.modul<<" "<<e->data.color<<" "<<e->data.price<<" "<<e->data.country<<" "<<e->data.year<<" "<<e->data.description<<" "<<e->data.status<<endl;
+        cout<<e->data.id<<" "<<e->data.brand<<" "<<e->data.model<<" "<<e->data.color<<" "<<e->data.price<<" "<<e->data.country<<" "<<e->data.year<<" "<<e->data.description<<" "<<e->data.status<<endl;
         e=e->next;
     }
     cout<<endl;
