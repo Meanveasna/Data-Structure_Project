@@ -11,7 +11,9 @@ Welcome to the **Car Information Management System**, a simple and intuitive con
 ▐▌   ▐▌ ▐▌▐▌ ▐▌    ▐▛▚▞▜▌▐▌ ▐▌▐▛▚▖▐▌▐▌ ▐▌▐▌   ▐▌   ▐▛▚▞▜▌▐▌   ▐▛▚▖▐▌  █
 ▐▌   ▐▛▀▜▌▐▛▀▚▖    ▐▌  ▐▌▐▛▀▜▌▐▌ ▝▜▌▐▛▀▜▌▐▌▝▜▌▐▛▀▀▘▐▌  ▐▌▐▛▀▀▘▐▌ ▝▜▌  █
 ▝▚▄▄▖▐▌ ▐▌▐▌ ▐▌    ▐▌  ▐▌▐▌ ▐▌▐▌  ▐▌▐▌ ▐▌▝▚▄▞▘▐▙▄▄▖▐▌  ▐▌▐▙▄▄▖▐▌  ▐▌  █
+
  Menu Options
+
 1. Add New Car – Add a new car record to the system.
 2. Delete Car – Remove an existing car based on a unique identifier.
 3. Display Car – Show all stored car records.
@@ -20,8 +22,15 @@ Welcome to the **Car Information Management System**, a simple and intuitive con
 6. About Us – Show project or developer information.
 7. Exit – Close the application.
 
+```
 ## 📦 Technologies Used
+``` text
 File I/O (CSV for data storage)
 Object-Oriented Programming
 Stack, Doube Link List
 Terminal/Console UI
+```
+## 🛠 How to Run
+1. Clone or download this repository.
+2. g++ main.cpp -o car_management
+3. ./car_management
