@@ -5,7 +5,7 @@ using namespace std;
 
 int main(){
     list *ls = CreateEmptyCarList();
-    cout<<"Welcome to the Student Management System! "<<endl;
+    cout<<"\n Welcome to the Student Management System! "<<endl;
     mainadmin(ls);
     return 0;
 }

@@ -1,6 +1,8 @@
 #include"../include/car.h"
 #include"../include/addCar.h"
 #include"../include/deleteCar.h"
+#include"../include/modify.h"
+#include"../include/display.h"
 #include<iostream>
 using namespace std;
 void addcar(list *ls){
@@ -76,6 +78,29 @@ void deleteCar(list *ls){
         break;
     }
 }
+void updatecar(list *ls){
+    int id;
+    cout<<"Please enter new data ID you want to update: ";
+    cin>>id;
+    car newdata;
+    newdata.id=id;
+    cout<<"Please enter new brand: ";
+    cin>>newdata.brand;
+    cout<<"Please enter new model: ";
+    cin>>newdata.model;
+    cout<<"Please enter new color: ";
+    cin>>newdata.color;
+    cout<<"Please enter new price($): ";
+    cin>>newdata.price;
+    cout<<"Please enter new contry: ";
+    cin>>newdata.country;
+    cout<<"Please enter new description: ";
+    cin>>newdata.description;
+    cout<<"Please enter new status(in stock, Used or not): ";
+    cin>>newdata.status;
+    update(ls,id,newdata);
+}
+
 void mainadmin(list *ls){
     int choice;
     while (true){
@@ -102,6 +127,10 @@ void mainadmin(list *ls){
             deleteCar(ls);
             break;
         case 3:
+            updatecar(ls);
+            break;
+        case 5:
+            display(ls);
             break;
         default:
             break;
