@@ -8,28 +8,18 @@
 
 //#include "admin.cpp"
 using namespace std;
-bool adminlogin(){
-    admin a;
-    cout<<"Please Enter Usersame: ";
-    cin >>  a.name;
-    cout<<"Please Enter password: ";
-    cin >> a.password;
-    if(a.name=="admin" && a.password=="admin123"){
+bool adminlogin(const string &name,const string &password){
+    if(name=="admin" && password=="admin123"){
         cout<<"Login successful"<<endl;
         return true;
+    }else{
+        cout<<"Login failed."<<endl;
+        return false;
     }
-    cout<<"Login failed."<<endl;
-    return false;
+    
 }
-bool userLogin(){
+bool userLogin(const  string&name, const string &password){
     string line;
-    user u;
-    cout << "\nEnter username: ";
-    cin.ignore();
-    getline(cin, u.name);
-    cout << "Enter password: ";
-    cin >> u.password;
-
     ifstream file("../Data/User.csv");
     if(!file){
         cout << "User.csv file not found.\n";
@@ -41,8 +31,8 @@ bool userLogin(){
         getline(ss, storeduser, ',');
         getline(ss, storedpass, '\n');
 
-        if(storeduser == u.name && storedpass == u.password){
-            cout << "Login successful as " << ". \n";
+        if(storeduser == name && storedpass == password){
+            cout << "Login successful." <<endl;
             return true;
         }
     }
@@ -65,36 +55,44 @@ void registerUser(){
 void login(userlist *uls, adminlist *alist){
     list *carls = CreateEmptyCarList();
     int opt;
-    string name,password;
+    string username,password;
     while(true){
         cout << "╔════════════════════════════════════╗\n";
         cout << "║            Login Menu              ║\n";
         cout << "╠════════════════════════════════════╣\n";
-        cout << "║ 1. Login as Admin                  ║\n";
-        cout << "║ 2. Login as User                   ║\n";
-        cout << "║ 3. Register New User               ║\n";
-        cout << "║ 4. Exit                            ║\n";
+        cout << "║ 1. Login                           ║\n";
+        cout << "║ 2. Register                        ║\n";
+        cout << "║ 3. Exit                            ║\n";
         cout << "╚════════════════════════════════════╝\n";
         cout << "Please select an option: ";
         cin >> opt;
-        switch (opt)
-        {
+        switch (opt){
         case 1:
-            if (adminlogin()){
+            cout<<"Please Enter Usersame: ";
+            cin.ignore();
+            getline(cin, username);
+            cout<<"Please Enter password: ";
+            cin >> password;
+            if (username == "admin" ) {
+                if(password =="admin123"){
+                cout << "Login successful as Admin\n";
                 mainadmin(carls);
                 return;
+                }else {
+                    cout<<"Login failed."<<endl;
+                }
+            }else if(userLogin(username, password)){
+                cout<<"Login as User"<<endl;
+                return;
+            }else{
+                cout<<"Invalid login."<<endl;
             }
-            
             break;
         case 2:
-            if (userLogin()){
-                return;
-            }
-            break;
-        case 3:
             registerUser();
             break;
-        case 4:
+        case 3:
+            
             return;
         default:
             cout<<"Please try again. "<<endl;
