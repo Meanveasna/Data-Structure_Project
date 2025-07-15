@@ -1,121 +1,67 @@
 #include <iostream>
-#include <ostream>
-#include <fstream>
+#include <string>
 #include "LinkList.h"
+#include "Login.h"
 using namespace std;
-void displayMenu() {
 
-   cout << R"(
+void displayLoginMenu() {
+    cout << R"(
  ▗▄▄▖ ▗▄▖ ▗▄▄▖     ▗▖  ▗▖ ▗▄▖ ▗▖  ▗▖ ◂▗▄▖  ▗▄▄▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄▖     ▗▄▄▖▗▖  ▗▖▗▄▄▖▗▄▄▄▖▗▄▄▄▖▗▖ ▗▖
 ▐▌   ▐▌ ▐▌▐▌ ▐▌    ▐▛▚▞▜▌▐▌ ▐▌▐▛▚▖▐▌▐▌ ▐▌▐▌   ▐▌   ▐▛▚▞▜▌▐▌   ▐▛▚▖▐▌  █      ▐▌    ▝▚▞▘▐▌     █  ▐▌   ▐▛▚▞▜▌
 ▐▌   ▐▛▀▜▌▐▛▀▚▖    ▐▌  ▐▌▐▛▀▜▌▐▌ ▝▜▌▐▛▀▜▌▐▌▝▜▌▐▛▀▀▘▐▌  ▐▌▐▛▀▀▘▐▌ ▝▜▌  █       ▝▀▚▖  ▐▌  ▝▀⚚▖  █  ▐▛▀▀▘▐▌  ▐▌
 ▝▚▄▄▖▐▌ ▐▌▐▌ ▐▌    ▐▌  ▐▌▐▌ ▐▌▐▌  ▐▌▐▌ ▐▌▝▚▄▞▘▐▙▄▄▖▐▌  ▐▌▐▙▄▄▖▐▌  ▐▌  █      ▗▄▄▞▘  ▐▌ ▗▄▄▞▘  █  ▐▙▄▄▖▐▌  ▐▌
-    )" <<endl;
-   cout << R"(
-┌─────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                           Car Management System                                         │
-├─────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                                         │
-│   [1] Add New Car                                                         [4] Modify Car Information    │
-│   [2] Delete Car                                                          [5] Search for a Car          │
-│   [3] Display Car                                                         [6] about us                  │
-│                                           [7] Exit                                                      │
-│                                                                                                         │
-└─────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-)" << endl;
-    cout << "Please enter your choice: ";
+    )" << endl;
+    cout << "╔══════════════════════════════════════════════════════════╗\n";
+    cout << "║" << setColor("cyan") << "                     Login/Register                   " << setColor("reset") << "    ║\n";
+    cout << "╠══════════════════════════════════════════════════════════╣\n";
+    cout << "║" << setColor("green") << "                       1. Login                       " << setColor("reset") << "    ║\n";
+    cout << "║" << setColor("green") << "                       2. Register                    " << setColor("reset") << "    ║\n";
+    cout << "║" << setColor("green") << "                       3. Exit                        " << setColor("reset") << "    ║\n";
+    cout << "╚══════════════════════════════════════════════════════════╝\n";
+    cout << "Please select an option (1-3) " << setColor("red") << "➤  " <<setColor("reset"); 
 }
-int main () {
-    // heart();
+
+int main() {
     int choice;
-    string Brand ;
-    string Model ;
-    string Color;
-    double Price ;
-    string Country ;
-    int Year;
-    string Description; 
-    List *ls = createList();
-    string Car_name;
+    string username, password;
+    string Brand, Model, Color, Country, Description, Car_name;
+    double Price;
+    int Year, id;
+    int opt;
+
+    List* ls = createList();
     RetrieveData(ls);
-    do {
-        displayMenu();
-        cin >> choice ;
-        switch (choice) {
-            case 1:
-                system("clear");
-                bool input_ok;
-                cout << " Add Car " << endl;
-                cout << "Please input Brand : " ; cin >> Brand;
-                cout << "Please input Model : " ; cin >> Model;
-                cout << "PLease input color : " ; cin >> Color;
-                cout << "Please input Price : " ; cin >> Price ;
-                cout << "Please input year : " ; cin >> Year;
-                cout << "Please input country : "; cin >> Country;
-                cout << "Add description : "; cin >> Description;
-                // Brand = "toyota";
-                // Model = "supra";
-                // Price = 1000000;
-                // Color = "Black";
-                // Country ="Japan";
-                // Year = 2000;
-                // Description = "Used condition";
-                addEnd(Brand, Model, Color, Price, Country, Description, Year, ls);
-                SaveData(ls);
-                break;
-            case 2:
-                system("clear");
-                int ID_del;
-                cout <<" Delete Car via ID" << endl;
-                cout << " Please input ID to delete "; cin >> ID_del;
-                deletPos (ls, ID_del);
-                SaveData(ls);
-                break;
-            case 3:
-                deleteAll(ls);
-                RetrieveData(ls);
-                system("clear");
-                cout << " Display Car " << endl;
-                Display(ls);
-                break;
-            case 4:
-                system("clear");
-                int id;
-                cout << "Modify Car Information " << endl;
-                cout << "Please input Car's ID "; cin >> id;
-                cout << "Please input Brand : " ; cin >> Brand;
-                cout << "Please input Model : " ; cin >> Model;
-                cout << "PLease input color : " ; cin >> Color;
-                cout << "Please input Price : " ; cin >> Price ;
-                cout << "Please input year : " ; cin >> Year;
-                cout << "Please input country : "; cin >> Country;
-                cout << "Add description : "; cin >> Description;
-                update(ls,id,Brand, Model, Color, Price, Country, Description, Year);
-                SaveData(ls);
-                break;
-            case 5:
-                system("clear");
-                cout << " Search for a car " << endl;
-                cout << "Please input Car's name : "; cin >> Car_name;
-                searchCar(ls, Car_name);
-                break;
-            case 6:
-                system("clear");
-                cout << "  ABout us " << endl;
-                cout << R"(
-                1. Meas Ratanakviphou
-                2. Dim Ponhakvontey
-                3. Thoun Meanveasna
-                )";
-                break;
-            case 7:
-                system("clear");
-                cout << " Bye BYe babe" << endl;
-                break;
-            default:
-                cout << " Invalid Input " << endl;
+
+     do {
+        displayLoginMenu();
+        opt = getValidMenuChoice(1, 3); //Safe and validated input
+        switch (opt) {
+        case 1:
+            cout <<  setColor("cyan") << "Username: " << setColor("reset");
+            cin >> username;
+            cout << setColor("cyan") << "Password: " << setColor("reset");
+            cin >> password;
+            if (username == "admin" && password == "admin") {
+                adminMenu(ls);
+            } else if (userLogin(username, password)) {
+                clientMenu(ls);
+            } else {
+                cout << "Invalid credentials!\n";
+            }
+            break;
+        case 2:
+            registerUser();
+            break;
+        case 3:
+            cout << "Goodbye!\n";
+            break;
+        default:
+            cout << "Invalid choice. Try again.\n";
         }
-    }while (choice != 7);
+    } while (opt != 3);
+
     SaveData(ls);
+    deleteAll(ls);
+    delete ls;
     return 0;
 }
