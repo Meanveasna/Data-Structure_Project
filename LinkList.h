@@ -7,6 +7,7 @@
 #include <sstream> 
 #include <iomanip>
 #include <regex>
+#include <algorithm>
 using namespace std;
 
 const char* setColor(const string& color) {
@@ -18,7 +19,6 @@ const char* setColor(const string& color) {
     else if (color == "purple") return "\033[35m";
     else return "";
 }
-
 
 struct Car {
     int Car_id;
@@ -48,25 +48,23 @@ List* createList() {
     return ls;
 }
 
-//To take an unique car's ID
-int getNextCarID(List* ls) {
-    int maxID = -1;
+bool isDuplicateID(List* ls, int id) {
     Node* e = ls->head;
     while (e != nullptr) {
-        if (e->data.Car_id > maxID)
-            maxID = e->data.Car_id;
+        if (e->data.Car_id == id)
+            return true;
         e = e->next;
     }
-    return maxID + 1;
+    return false;
 }
 
-void addBegin(string Brand, string Model, string color, double price, string country, string description, int year, List* ls) {
+void addBegin(int id, string Brand, string Model, string color, double price, string country, string description, int year, List* ls) {
     Node* e = new Node();
     e->data.Brand = Brand;
     e->data.Model = Model;
     e->data.Color = color;
     e->data.Price = price;
-    e->data.Car_id = getNextCarID(ls);
+    e->data.Car_id = id;
     e->data.Country = country;
     e->data.Description = description;
     e->data.Year = year;
@@ -253,38 +251,48 @@ void Display(List* ls) {
         e = e->next;
     }
 }
-
 void searchCar(List* ls, string name) {
     Node* e = ls->head;
-    regex car_name(name, regex_constants::icase);
-    cout << left
-         << setw(8) << "ID"
-         << setw(15) << "Brand"
-         << setw(15) << "Model"
-         << setw(15) << "Color"
-         << setw(12) << "Country"
-         << setw(5) << "Year"
-         << setw(15) << "Price($)"
-         << setw(20) << "Description" << endl;
-    cout << string(90, '-') << endl;
     bool found = false;
+
+    string originalKeyword = name;  // Preserve original for message
+    transform(name.begin(), name.end(), name.begin(), ::tolower); // lowercase input
+
+    cout << left
+         << setw(8)  << "ID"
+         << setw(12) << "Brand"
+         << setw(12) << "Model"
+         << setw(10) << "Color"
+         << setw(12) << "Country"
+         << setw(6)  << "Year"
+         << setw(10) << "Price"
+         << setw(20) << "Description" << endl;
+
+    cout << string(90, '-') << endl;
+
     while (e != nullptr) {
-        if (e->data.Brand == name || regex_search(e->data.Brand, car_name)) {
+        string brand = e->data.Brand;
+        string lowerBrand = brand;
+        transform(lowerBrand.begin(), lowerBrand.end(), lowerBrand.begin(), ::tolower);
+
+        if (lowerBrand == name) {  
             cout << left
-                 << setw(8) << e->data.Car_id
-                 << setw(15) << e->data.Brand
-                 << setw(15) << e->data.Model
-                 << setw(15) << e->data.Color
-                 << setw(15) << e->data.Country
-                 << setw(7) << e->data.Year
-                 << setw(15) << fixed << setprecision(2) << e->data.Price
+                 << setw(8)  << e->data.Car_id
+                 << setw(12) << e->data.Brand
+                 << setw(12) << e->data.Model
+                 << setw(10) << e->data.Color
+                 << setw(12) << e->data.Country
+                 << setw(6)  << e->data.Year
+                 << setw(10) << fixed << setprecision(2) << e->data.Price
                  << setw(20) << e->data.Description << endl;
             found = true;
         }
+
         e = e->next;
     }
+
     if (!found) {
-        cout << "No car found with brand matching \"" << name << "\"" << endl;
+        cout << setColor("red") << "NOT FOUND with keyword: " << originalKeyword << "!" << setColor("reset") << endl;
     }
 }
 

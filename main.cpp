@@ -34,7 +34,7 @@ int main() {
 
      do {
         displayLoginMenu();
-        opt = getValidMenuChoice(1, 3); //Safe and validated input
+        opt = getValidMenuChoice(1, 3); 
         switch (opt) {
         case 1:
             cout <<  setColor("cyan") << "Username: " << setColor("reset");

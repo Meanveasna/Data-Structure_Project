@@ -73,7 +73,6 @@ string validString(const string& label, bool (*validator)(const string&), bool r
 //Year validation
 int validYear() {
     int Year;
-    cout << "Please input Year (1800 - 2025): ";
     setColor("blue");
     cout << "[*] ";
     setColor("reset");
@@ -166,7 +165,7 @@ void registerUser() {
 }
 void adminMenu(List* ls){
     int choice;
-    string Brand, Model, Color, Country, Description, keyword;
+    string Brand, Model, Color, Country, Description, name;
     double Price;
     int Year, id;
 
@@ -205,7 +204,6 @@ void adminMenu(List* ls){
         switch (choice) {
         case 1:{
             cout << "\n-- Add Car --\n";
-            cin.ignore();
             Brand = validString("Brand", isValidBrandDesc);
             Model = validString("Model", isValidBrandDesc);
             Color = validString("Color", isValidAlphaOnly);
@@ -214,9 +212,24 @@ void adminMenu(List* ls){
             Country = validString("Country", isValidAlphaOnly);
             Description = validString("Description", isValidBrandDesc, true, 200);
 
-            int id = getNextCarID(ls);
-            addEnd(id, Brand, Model, Color, Price, Country, Description, Year, ls);
+            int inputID;
+            do {
+                cout << setColor("cyan") << "Enter 4-digit Car ID (1000–9999): " << setColor("reset");
+                cin >> inputID;
+
+                if (cin.fail() || inputID < 1000 || inputID > 9999) {
+                    cin.clear();
+                    cin.ignore(10000, '\n');
+                    cout << setColor("red") << "Invalid ID. It must be a 4-digit integer.\n" << setColor("reset");
+                } else if (isDuplicateID(ls, inputID)) {
+                    cout << setColor("red") << "ID already exists. Please enter a unique ID.\n" << setColor("reset");
+                } else {
+                    break; 
+                }
+            } while (true);
+            addEnd(inputID, Brand, Model, Color, Price, Country, Description, Year, ls);
             SaveData(ls);
+            cout << "Car added successfully!" <<endl;
             break;
         }
         case 2: {
@@ -260,14 +273,16 @@ void adminMenu(List* ls){
             SaveData(ls);
             break;
         }
-        case 5:{
+        case 5: {
             cout << "\n-- Search for a car --\n";
-            cout << "Enter any keywords: "; cin.ignore(); getline(cin, keyword);
-            searchCar(ls, keyword);
+            cout << "Enter any keywords: "; 
+            getline(cin, name);
+            searchCar(ls, name);
             cout << setColor("yellow") << "\nPress any key to return to the menu...\n" << setColor("reset");
             _getch();
             break;
         }
+
         case 6:{
             cout << "\n-- About us --\n";
             cout << R"(
@@ -287,7 +302,7 @@ void adminMenu(List* ls){
 }
 void clientMenu(List* ls) {
     int choice;
-    string keyword;
+    string name;
     do {
         cout << setColor("purple") << R"(                                                                 
            .---.            ,--,                                ____           
@@ -328,9 +343,8 @@ choice = getValidMenuChoice(1, 4);
                 break;
             case 2: 
                 cout << "Enter keyword: ";
-                cin.ignore();
-                getline(cin, keyword);
-                searchCar(ls, keyword);
+                getline(cin, name);
+                searchCar(ls, name);
                 cout << setColor("yellow") << "\nPress any key to return to the menu...\n" << setColor("reset");
                 _getch();
                 break;
