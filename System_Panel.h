@@ -258,8 +258,10 @@ void adminMenu(List* ls){
             cout << "\n-- Modify Car --\n";
             Display(ls);
             cout << "Please input Car's ID: "; cin >> id; 
+            id = int (id);
             clearInput();
             if (!Checkupdate(ls, id)) {
+                cout << setColor("red") << "No car found with this ID." << setColor("reset") << endl;
                 cout << setColor("yellow") << "\nPress any key to return to the menu...\n" << setColor("reset");
                 _getch();  
                 break;   
