@@ -167,28 +167,6 @@ void deleteEnd(List* ls) {
     ls->n--;
 }
 
-// void deletPos(List* ls, int pos) {
-//     if (pos < 0 || pos > ls->n - 1) return;
-//     if (pos == 0) {
-//         deleteBeg(ls);
-//         return;
-//     }
-//     if (pos == ls->n - 1) {
-//         deleteEnd(ls);
-//         return;
-//     }
-//     Node* current = ls->head;
-//     for (int i = 0; i < pos - 1; i++) {
-//         current = current->next;
-//     }
-//     Node* temp = current->next;
-//     current->next = temp->next;
-//     if (temp->next != nullptr) {
-//         temp->next->prev = current;
-//     }
-//     delete temp;
-//     ls->n--;
-// }
 
 void deletPos(List* ls, int pos) {
     Node* e = ls->head;
