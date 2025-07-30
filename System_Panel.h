@@ -228,7 +228,8 @@ void adminMenu(List* ls){
             char ans;
             cout << "\n-- Delete Car via ID --\n";
             Display(ls);
-            cout << "Please input ID to delete: "; cin >> ans; cin.ignore(); clearInput();
+            cout << "Please input ID to delete: "; cin >> id; cin.ignore(); clearInput();
+            id = int (id);
             if (Checkupdate(ls, id)) {
                 cout << " Do you wanna Delete it (y/n)" ; cin >> ans;
                 if (ans == 'Y' || ans =='y'){
@@ -238,9 +239,12 @@ void adminMenu(List* ls){
                 else if ( ans == 'n' || ans =='N') {
                     cout << " Cancelled the delete" << endl;
                 }
+                else{
+                    break;
+                }
                 
             } else {
-                cout << setColor("red") << "No car with ID " << id << " found. Deletion cancelled." << setColor("reset") << endl;
+                cout << setColor("red") << " No car with ID " << id << " found. Deletion cancelled." << setColor("reset") << endl;
             }
             break;
         }
@@ -261,7 +265,6 @@ void adminMenu(List* ls){
             id = int (id);
             clearInput();
             if (!Checkupdate(ls, id)) {
-                cout << setColor("red") << "No car found with this ID." << setColor("reset") << endl;
                 cout << setColor("yellow") << "\nPress any key to return to the menu...\n" << setColor("reset");
                 _getch();  
                 break;   
