@@ -245,9 +245,10 @@ void adminMenu(List* ls){
             break;
         }
         case 3: {
+            int ans;
             cout << "╭──────────────────────────────────────────────────────────────────────────────────────╮\n";
             cout << "│                      Car Management System — Inventory Overview                      │\n";
-            cout << "╰──────────────────────────────────────────────────────────────────────────────────────╯\n";
+            cout << "╰──────────────────────────────────────────────────────────────────────────────────────╯\n";            
             Display(ls);
             cout << setColor("yellow") << "\nPress any key to return to the menu...\n" << setColor("reset");
             _getch();
@@ -361,19 +362,5 @@ choice = getValidMenuChoice(1, 4);
     } while (choice != 4);
 }
 
-// void Login(List *ls){
-//     string username, password;
-//     cout <<  setColor("cyan") << "Username: " << setColor("reset");
-//     cin >> username;
-//     cout << setColor("cyan") << "Password: " << setColor("reset") << endl;
-//     password = getPassword();
-//     if (username == "admin" && hashPassword(password)== "8141937955048696534") {
-//         adminMenu(ls);
-//     } else if (userLogin(username, password)) {
-//         clientMenu(ls);
-//     } else {
-//         cout << setColor("red") << "Invalid credentials!\n" << setColor("reset");
-//     }
-// }
 
 #endif

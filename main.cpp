@@ -42,7 +42,7 @@ int main() {
             cout <<  setColor("cyan") << "Username: " << setColor("reset");
             cin >> username;
             password = getPassword();
-            if (username == "admin" && password == "admin") {
+            if (username == "admin" && hashPassword(password) == "8141937955048696534") {
                 adminMenu(ls);
             } else if (userLogin(username, password)) {
                 clientMenu(ls);
