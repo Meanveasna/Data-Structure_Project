@@ -228,7 +228,7 @@ void adminMenu(List* ls){
             char ans;
             cout << "\n-- Delete Car via ID --\n";
             Display(ls);
-            cout << "Please input ID to delete: "; cin >> id;
+            cout << "Please input ID to delete: "; cin >> ans; cin.ignore(); clearInput();
             if (Checkupdate(ls, id)) {
                 cout << " Do you wanna Delete it (y/n)" ; cin >> ans;
                 if (ans == 'Y' || ans =='y'){
