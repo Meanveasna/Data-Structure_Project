@@ -80,7 +80,7 @@ int validYear() {
     cout << "[*] ";
     setColor("reset");
     cout << "Year: ";
-    while (!(cin >> Year) || Year < 1800 ) {
+    while (!(cin >> Year) || Year < 1800 || Year > 2027) {
         clearInput();
         cout << "Please input the year from 1800. Please re-enter: ";
     }
