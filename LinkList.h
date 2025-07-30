@@ -1,15 +1,20 @@
 #ifndef LINKLIST_H
 #define LINKLIST_H
-
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream> 
+#include <conio.h> 
 #include <iomanip>
 #include <regex>
 #include <algorithm>
 using namespace std;
 
+void swap (int &a, int &b ){
+	int temp = a;
+	a = b;
+	b = temp;
+}
 const char* setColor(const string& color) {
     if (color == "reset") return "\033[0m";
     else if (color == "cyan") return "\033[36m";
@@ -47,7 +52,34 @@ List* createList() {
     ls->n = 0;
     return ls;
 }
-
+Node *partition (Node * low, Node * high){
+    int pivot = low ->data.Car_id;
+    Node *start = low;
+    Node *end = high;
+    while (start != end){
+        while (end != start && end -> data.Car_id > pivot){
+            end = end -> prev;
+        }
+        while (start != end && start -> data.Car_id <= pivot){
+            start = start -> next;
+        }
+        if (start != end){
+            swap(start ->data.Car_id , end -> data.Car_id);
+        }
+    }
+    swap(low ->data.Car_id, end->data.Car_id);
+    return end;
+}
+void quickSort (Node *low, Node *high){
+    if (low && high && low != high && low != high -> next){
+        Node *pivotNode = partition(low, high);
+        quickSort(low, pivotNode -> prev);
+        quickSort(pivotNode -> next, high);
+    }
+}
+void sortList(List *ls){
+    quickSort(ls -> head, ls-> tail);
+}
 bool isDuplicateID(List* ls, int id) {
     Node* e = ls->head;
     while (e != nullptr) {
@@ -57,6 +89,7 @@ bool isDuplicateID(List* ls, int id) {
     }
     return false;
 }
+
 
 void addBegin(int id, string Brand, string Model, string color, double price, string country, string description, int year, List* ls) {
     Node* e = new Node();
@@ -95,6 +128,7 @@ void addEnd(int id, string Brand, string Model, string color, double price, stri
 }
 
 void SaveData(List* ls) {
+    sortList(ls);
     if (ls->n == 0) return;
     ofstream outputFile("CarInfo.csv");
     Node* e = ls->head;
@@ -197,6 +231,7 @@ bool Checkupdate(List* ls, int id) {
         e = e->next;
     }
     cout << setColor("red") << "No car found with this ID." << setColor("reset") << endl;
+    cout << "Press any key to continoue"; _getch();
     return false;
 }
 void update(List* ls, int id, string Brand, string Model, string Color, double Price, string Country, string Description, int Year) {
@@ -226,6 +261,7 @@ void update(List* ls, int id, string Brand, string Model, string Color, double P
 
 void Display(List* ls) {
     Node* e = ls->head;
+    sortList(ls);
     cout << left
          << setw(8) << "ID"
          << setw(15) << "Brand"
@@ -254,47 +290,42 @@ void Display(List* ls) {
 void searchCar(List* ls, string name) {
     Node* e = ls->head;
     bool found = false;
-
-    string originalKeyword = name;  // Preserve original for message
-    transform(name.begin(), name.end(), name.begin(), ::tolower); // lowercase input
-
     cout << left
          << setw(8)  << "ID"
          << setw(12) << "Brand"
          << setw(12) << "Model"
          << setw(10) << "Color"
          << setw(12) << "Country"
-         << setw(6)  << "Year"
+         << setw(6) << "year"
          << setw(10) << "Price"
-         << setw(20) << "Description" << endl;
-
-    cout << string(90, '-') << endl;
+         << setw(20)  << "Description" << endl;
 
     while (e != nullptr) {
-        string brand = e->data.Brand;
-        string lowerBrand = brand;
-        transform(lowerBrand.begin(), lowerBrand.end(), lowerBrand.begin(), ::tolower);
+        // Case-insensitive search
+        string brandLower = e->data.Brand;
+        string nameLower = name;
+        transform(brandLower.begin(), brandLower.end(), brandLower.begin(), ::tolower);
+        transform(nameLower.begin(), nameLower.end(), nameLower.begin(), ::tolower);
 
-        if (lowerBrand == name) {  
+        if (brandLower.find(nameLower) != string::npos) {
             cout << left
                  << setw(8)  << e->data.Car_id
                  << setw(12) << e->data.Brand
                  << setw(12) << e->data.Model
                  << setw(10) << e->data.Color
                  << setw(12) << e->data.Country
-                 << setw(6)  << e->data.Year
+                 << setw(6) << e->data.Year
                  << setw(10) << fixed << setprecision(2) << e->data.Price
-                 << setw(20) << e->data.Description << endl;
+                 << setw(20)  << e->data.Description << endl;
             found = true;
         }
-
         e = e->next;
     }
-
     if (!found) {
-        cout << setColor("red") << "NOT FOUND with keyword: " << originalKeyword << "!" << setColor("reset") << endl;
+        cout << "No car found with brand containing \"" << name << "\"." << endl;
     }
 }
+
 
 void RetrieveData(List* ls) {
     ifstream inputFile("CarInfo.csv");

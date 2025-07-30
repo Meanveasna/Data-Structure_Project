@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
 #include "LinkList.h"
-#include "Login.h"
+#include "System_Panel.h"
+
 using namespace std;
 
 void displayLoginMenu() {
@@ -22,6 +23,7 @@ void displayLoginMenu() {
 }
 
 int main() {
+   
     int choice;
     string username, password;
     string Brand, Model, Color, Country, Description, Car_name;
@@ -39,8 +41,7 @@ int main() {
         case 1:
             cout <<  setColor("cyan") << "Username: " << setColor("reset");
             cin >> username;
-            cout << setColor("cyan") << "Password: " << setColor("reset");
-            cin >> password;
+            password = getPassword();
             if (username == "admin" && password == "admin") {
                 adminMenu(ls);
             } else if (userLogin(username, password)) {
@@ -53,13 +54,13 @@ int main() {
             registerUser();
             break;
         case 3:
-            cout << "Goodbye!\n";
+          
+            cout << "=========================Goodbye!========================\n";
             break;
         default:
             cout << "Invalid choice. Try again.\n";
         }
     } while (opt != 3);
-
     SaveData(ls);
     deleteAll(ls);
     delete ls;
